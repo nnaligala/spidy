@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spider Cursor Follower</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #111;
+      overflow: hidden;
+      cursor: none; /* Hide default cursor */
+    }
+
+    #spider {
+      width: 60px;
+      height: 60px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      box-shadow: 0 0 0 2px black;
+      transition: transform 0.1s linear;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="spider"></div>
+
+  <script>
+    const spider = document.getElementById('spider');
+    let spiderX = 0;
+    let spiderY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      const dx = e.clientX - spiderX;
+      const dy = e.clientY - spiderY;
+      const angle = Math.atan2(dy, dx);
+      const speed = 5;
+      spiderX += speed * Math.cos(angle);
+      spiderY += speed * Math.sin(angle);
+
+      spider.style.transform = `translate(${spiderX}px, ${spiderY}px)`;
+    });
+
+    // Keep animating toward cursor
+    function followCursor() {
+      requestAnimationFrame(followCursor);
+    }
+    followCursor();
+  </script>
+
+</body>
+</html>
